@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omer Huroglu</title>
+
+  <meta name="description" content="OmerHuroglu.com" />
+  <meta name="author" content="Omer Huroglu" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Omer Huroglu" />
+  <meta property="og:description" content="OmerHuroglu.com" />
+  <meta property="og:url" content="https://omerhuroglu.com/" />
+  <meta property="og:site_name" content="Omer Huroglu" />
+  <meta property="og:image" content="https://omerhuroglu.com/omer-huroglu-ogimage.png" />
+
+  <link rel="canonical" href="https://omerhuroglu.com/" />
+  <link rel="icon" type="image/x-icon" href="omer-huroglu-favicon.ico" />
+
+  <style>
+    :root {
+      --background-color: #000;
+      --foreground-color: #fff;
+      --glow-color: rgba(0, 204, 255, 1);
+      --page-spacing: 20px;
+      --menu-transition-duration: 0.5s;
+      --bloom-duration: 3s;
+      --primary-font: Helvetica, Arial, sans-serif;
+      --monospace-font: "Courier New", Courier, monospace;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--background-color);
+      color: var(--foreground-color);
+      font-family: var(--primary-font);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    main,
+    #contact-widget,
+    footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    #typewriter {
+      position: fixed;
+      top: var(--page-spacing);
+      right: var(--page-spacing);
+      left: var(--page-spacing);
+      font-family: var(--monospace-font);
+      font-size: 30px;
+      text-shadow: 0 0 30px var(--glow-color);
+    }
+
+    .cursor {
+      animation: blink 1s infinite;
+    }
+
+    #contact-widget {
+      position: fixed;
+      top: 50%;
+      right: var(--page-spacing);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transform: translateY(-50%);
+    }
+
+    #contact-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: right;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(20px);
+      transition:
+        opacity var(--menu-transition-duration) ease,
+        transform var(--menu-transition-duration) ease,
+        visibility var(--menu-transition-duration) ease;
+    }
+
+    #contact-menu.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    #contact-menu a {
+      color: var(--foreground-color);
+      font-size: 15px;
+      text-decoration: none;
+      text-shadow: 0 0 15px var(--glow-color);
+    }
+
+    #contact-menu a:hover {
+      text-decoration: underline;
+    }
+
+    #contact-menu a:focus-visible,
+    #contact-button:focus-visible {
+      outline: 1px solid var(--foreground-color);
+      outline-offset: 5px;
+    }
+
+    #contact-button {
+      border: 0;
+      padding: 0;
+      background: none;
+      color: var(--foreground-color);
+      font: inherit;
+      font-size: 30px;
+      text-shadow: 0 0 30px var(--glow-color);
+      cursor: pointer;
+      transition: transform var(--menu-transition-duration) ease;
+    }
+
+    #contact-button.is-open {
+      transform: rotate(135deg);
+    }
+
+    footer {
+      position: fixed;
+      right: var(--page-spacing);
+      bottom: var(--page-spacing);
+      left: var(--page-spacing);
+      font-size: 12.5px;
+      text-align: center;
+      text-shadow: 0 0 12.5px var(--glow-color);
+      white-space: nowrap;
+    }
+
+    .click-flash {
+      position: fixed;
+      z-index: 0;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(153, 0, 204, 0.10) 0%,
+        rgba(0, 0, 204, 0.05) 40%,
+        transparent 80%
+      );
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0);
+      animation: clickBloom var(--bloom-duration) ease-out forwards;
+    }
+
+    @keyframes blink {
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes clickBloom {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      60% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor,
+      .click-flash {
+        animation: none;
+      }
+
+      #contact-menu,
+      #contact-button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="typewriter" aria-hidden="true"></div>
+    <p id="typewriter-accessible" class="visually-hidden" aria-live="polite"></p>
+  </main>
+
+  <div id="contact-widget">
+    <nav id="contact-menu" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/omerhuroglu" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.facebook.com/omerhuroglu0" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a href="https://www.instagram.com/omerhuroglu" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://x.com/omerhuroglu" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://github.com/omerhuroglu" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+
+    <button
+      id="contact-button"
+      type="button"
+      aria-label="Open contact links"
+      aria-controls="contact-menu"
+      aria-expanded="false"
+    >
+      +
+    </button>
+  </div>
+
+  <footer>
+    © <span id="year"></span> Omer Huroglu. All rights reserved.<br />
+    United States
+  </footer>
+
+  <script>
+    const MESSAGES = [
+      "Hello!",
+      "Thank you for visiting OmerHuroglu.com.",
+      "You can reach out via the menu.",
+    ];
+    const CURSOR_MARKUP = '<span class="cursor">|</span>';
+    const TYPE_DELAY = 100;
+    const DELETE_DELAY = 50;
+    const MESSAGE_PAUSE = 3000;
+
+    const typewriterElement = document.getElementById("typewriter");
+    const typewriterAccessibleElement = document.getElementById("typewriter-accessible");
+    const contactButton = document.getElementById("contact-button");
+    const contactMenu = document.getElementById("contact-menu");
+    const yearElement = document.getElementById("year");
+
+    let messageIndex = 0;
+    let characterIndex = 0;
+    let isDeleting = false;
+    let isPressing = false;
+
+    function updateTypewriter() {
+      const currentMessage = MESSAGES[messageIndex];
+
+      if (isDeleting) {
+        characterIndex--;
+      } else {
+        characterIndex++;
+      }
+
+      typewriterElement.innerHTML = currentMessage.slice(0, characterIndex) + CURSOR_MARKUP;
+
+      if (!isDeleting && characterIndex === currentMessage.length) {
+        isDeleting = true;
+        setTimeout(updateTypewriter, MESSAGE_PAUSE);
+        return;
+      }
+
+      if (isDeleting && characterIndex === 0) {
+        isDeleting = false;
+        messageIndex = (messageIndex + 1) % MESSAGES.length;
+        typewriterAccessibleElement.textContent = MESSAGES[messageIndex];
+        setTimeout(updateTypewriter, MESSAGE_PAUSE);
+        return;
+      }
+
+      setTimeout(updateTypewriter, isDeleting ? DELETE_DELAY : TYPE_DELAY);
+    }
+
+    function setContactMenuState(isOpen) {
+      contactMenu.classList.toggle("is-open", isOpen);
+      contactButton.classList.toggle("is-open", isOpen);
+      contactButton.setAttribute("aria-expanded", String(isOpen));
+      contactButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close contact links" : "Open contact links"
+      );
+    }
+
+    function toggleContactMenu() {
+      setContactMenuState(!contactMenu.classList.contains("is-open"));
+    }
+
+    function closeContactMenu() {
+      setContactMenuState(false);
+    }
+
+    function createBloom(x, y) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      const bloomElement = document.createElement("div");
+
+      bloomElement.classList.add("click-flash");
+      bloomElement.style.left = `${x}px`;
+      bloomElement.style.top = `${y}px`;
+      bloomElement.addEventListener("animationend", () => bloomElement.remove(), {
+        once: true,
+      });
+
+      document.body.appendChild(bloomElement);
+    }
+
+    function isPointerEffectExcluded(event) {
+      return Boolean(event.target.closest("#contact-widget"));
+    }
+
+    function handleContactButtonPointerDown(event) {
+      event.stopPropagation();
+      toggleContactMenu();
+    }
+
+    function handleDocumentPointerDown(event) {
+      if (contactMenu.classList.contains("is-open") && !event.target.closest("#contact-widget")) {
+        closeContactMenu();
+      }
+
+      if (isPointerEffectExcluded(event)) {
+        return;
+      }
+
+      isPressing = true;
+      createBloom(event.clientX, event.clientY);
+    }
+
+    function handleDocumentPointerMove(event) {
+      if (!isPressing || isPointerEffectExcluded(event)) {
+        return;
+      }
+
+      createBloom(event.clientX, event.clientY);
+    }
+
+    function stopPointerEffect() {
+      isPressing = false;
+    }
+
+    function initialize() {
+      yearElement.textContent = new Date().getFullYear();
+      typewriterElement.innerHTML = CURSOR_MARKUP;
+      typewriterAccessibleElement.textContent = MESSAGES[0];
+
+      contactButton.addEventListener("pointerdown", handleContactButtonPointerDown);
+      document.addEventListener("pointerdown", handleDocumentPointerDown);
+      document.addEventListener("pointermove", handleDocumentPointerMove);
+      document.addEventListener("pointerup", stopPointerEffect);
+      document.addEventListener("pointercancel", stopPointerEffect);
+
+      setTimeout(updateTypewriter, MESSAGE_PAUSE);
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
