@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omer Huroglu</title>
+  <link rel="icon" type="image/x-icon" href="omer-huroglu-favicon.ico" />
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    #typewriter {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      left: 20px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 30px;
+    }
+
+    .cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% {
+        opacity: 1;
+      }
+
+      51%, 100% {
+        opacity: 0;
+      }
+    }
+
+    #contact-widget {
+      position: fixed;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      top: 50%;
+      right: 20px;
+      gap: 20px;
+      transform: translateY(-50%);
+    }
+
+    #contact-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: right;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+    }
+
+    #contact-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    #contact-menu a {
+      color: #fff;
+      font-size: 15px;
+      text-decoration: none;
+    }
+
+    #contact-menu a:hover {
+      text-decoration: underline;
+    }
+
+    #contact-button {
+      border: none;
+      background: none;
+      color: #fff;
+      font: inherit;
+      font-size: 30px;
+      cursor: pointer;
+      transition: transform 0.5s ease;
+    }
+
+    #contact-button.open {
+      transform: rotate(135deg);
+    }
+
+    footer {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+      text-align: center;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .click-flash {
+      position: fixed;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.10) 0%,
+        rgba(255, 255, 255, 0.05) 33%,
+        transparent 66%
+      );
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0);
+      animation: clickBloom 1.5s ease-in-out forwards;
+    }
+
+    @keyframes clickBloom {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+
+      33% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+
+      66% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="typewriter"></div>
+
+  <div id="contact-widget">
+    <div id="contact-menu">
+      <a href="https://www.linkedin.com/in/omerhuroglu" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.facebook.com/omerhuroglu0" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a href="https://www.instagram.com/omerhuroglu" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://x.com/omerhuroglu" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://github.com/omerhuroglu" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAcnc316fAFHVuHTepNGn_5knc_2KBYyGitk5HZL7ohNOAvQ/viewform?usp=sharing&amp;ouid=110527972171914812028" target="_blank" rel="noopener noreferrer">Contact Form</a>
+    </div>
+
+    <button id="contact-button" aria-label="Open contact links">
+      +
+    </button>
+  </div>
+
+  <footer>
+    © <span id="year"></span> Omer Huroglu. All rights reserved.<br />
+    United States
+  </footer>
+
+  <script>
+    const typewriter = document.getElementById("typewriter");
+    const contactButton = document.getElementById("contact-button");
+    const contactMenu = document.getElementById("contact-menu");
+    const year = document.getElementById("year");
+
+    const messages = [
+      "Hello!",
+      "Thank you for visiting OmerHuroglu.com.",
+      "You can reach out via the menu."
+    ];
+
+    const cursor = '<span class="cursor">|</span>';
+
+    let messageIndex = 0;
+    let characterIndex = 0;
+    let isDeleting = false;
+    let isPressing = false;
+
+    function typeText() {
+      const currentMessage = messages[messageIndex];
+
+      if (!isDeleting) {
+        typewriter.innerHTML = currentMessage.slice(0, characterIndex + 1) + cursor;
+        characterIndex++;
+
+        if (characterIndex === currentMessage.length) {
+          isDeleting = true;
+        }
+      } else {
+        typewriter.innerHTML = currentMessage.slice(0, characterIndex - 1) + cursor;
+        characterIndex--;
+
+        if (characterIndex === 0) {
+          isDeleting = false;
+          messageIndex = (messageIndex + 1) % messages.length;
+        }
+      }
+
+      let speed = isDeleting ? 50 : 100;
+
+      if (characterIndex === currentMessage.length) {
+        speed = 3000;
+      }
+
+      if (characterIndex === 0) {
+        speed = 3000;
+      }
+
+      setTimeout(typeText, speed);
+    }
+
+    contactButton.addEventListener("pointerdown", function (event) {
+      event.stopPropagation();
+
+      const isOpen = contactMenu.classList.toggle("open");
+
+      contactButton.classList.toggle("open", isOpen);
+
+      if (isOpen) {
+        contactButton.setAttribute("aria-label", "Close contact links");
+      } else {
+        contactButton.setAttribute("aria-label", "Open contact links");
+      }
+    });
+
+    document.addEventListener("pointerdown", function (event) {
+      if (!contactMenu.classList.contains("open")) {
+        return;
+      }
+
+      if (event.target.closest("#contact-widget")) {
+        return;
+      }
+
+      contactMenu.classList.remove("open");
+      contactButton.classList.remove("open");
+      contactButton.setAttribute("aria-label", "Open contact links");
+    });
+
+    function createBloom(x, y) {
+      const flash = document.createElement("div");
+
+      flash.classList.add("click-flash");
+      flash.style.left = x + "px";
+      flash.style.top = y + "px";
+
+      document.body.appendChild(flash);
+
+      setTimeout(function () {
+        flash.remove();
+      }, 1500);
+    }
+
+    function shouldIgnore(event) {
+      return event.target.closest("#contact-widget");
+    }
+
+    document.addEventListener("pointerdown", function (event) {
+      if (shouldIgnore(event)) {
+        return;
+      }
+
+      isPressing = true;
+      createBloom(event.clientX, event.clientY);
+    });
+
+    document.addEventListener("pointermove", function (event) {
+      if (!isPressing || shouldIgnore(event)) {
+        return;
+      }
+
+      createBloom(event.clientX, event.clientY);
+    });
+
+    document.addEventListener("pointerup", function () {
+      isPressing = false;
+    });
+
+    document.addEventListener("pointercancel", function () {
+      isPressing = false;
+    });
+
+    year.textContent = new Date().getFullYear();
+    typewriter.innerHTML = cursor;
+    setTimeout(typeText, 3000);
+  </script>
+</body>
+</html>
